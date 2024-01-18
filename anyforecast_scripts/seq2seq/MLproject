@@ -1,0 +1,37 @@
+name: Seq2Seq
+python_env: python_env.yaml
+entry_points:
+  main:
+    parameters:
+      train: {type: str}
+      group_ids: {type: str}
+      datetime: {type: str}
+      target: {type: str}
+      time_varying_known: {type: str, default: ""}
+      time_varying_unknown: {type: str, default: ""}
+      static_categoricals: {type: str, default: ""}
+      static_reals: {type: str, default: ""}
+      max_prediction_length: {type: int, default: 6}
+      max_encoder_length: {type: int, default: 24}
+      freq: {type: int, default: D}
+      device: {type: str, default: cpu}
+      max-epochs: {type: int, default: 10}
+      verbose: {type: int, default: 1}
+    
+    command: "
+    python main.py 
+    --train {train}
+    --group_ids {group_ids} 
+    --datetime {datetime} 
+    --target {target} 
+    --time_varying_known {time_varying_known}
+    --time_varying_unknown {time_varying_unknown}
+    --static_categoricals {static_categoricals}
+    --static_reals {static_reals}
+    --max_prediction_length {max_prediction_length}
+    --max_encoder_length {max_encoder_length}
+    --freq {freq}
+    --device {device}
+    --max_epochs {max_epochs}
+    --verbose {verbose}
+    "
