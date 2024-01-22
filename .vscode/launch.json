@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                "--filepath", 
+                "/Users/ramonamezquita/Projects/anyforecast-scripts/src/anyforecast_scripts/data/stallion.csv",
+                "--group-cols",
+                "agency,sku",
+                "--datetime",
+                "date",
+                "--target",
+                "volume",
+                "--time-varying-known",
+                "price_regular,price_actual,discount",
+                "--time-varying-unknown",
+                "volume",
+                "--static-categoricals",
+                "agency,sku",
+                "--freq",
+                "MS"
+            ]
+        }
+    ]
+}

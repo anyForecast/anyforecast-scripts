@@ -11,12 +11,15 @@ def split_commas(ctx, param, value: str) -> list[str]:
     return value.split(",")
 
 
-def skorchforecasting_options(f: callable):
+def network_options(f: callable):
     @click.option(
-        "--train", required=True, type=str, help="Filepath for training data."
+        "--filepath",
+        required=True,
+        type=str,
+        help="Filepath for training data.",
     )
     @click.option(
-        "--group-ids",
+        "--group-cols",
         required=True,
         type=str,
         callback=split_commas,
@@ -25,11 +28,11 @@ def skorchforecasting_options(f: callable):
         "constant. ",
     )
     @click.option(
-        "--timestamp",
+        "--datetime",
         required=True,
         type=str,
-        help="Timestamp or datetime column. The ``group-ids`` columns identify a "
-        "sample together with the ``timestamp``.",
+        help="Datetime column. The ``group-cols`` columns identify a "
+        "sample together with the ``datetime`` column.",
     )
     @click.option(
         "--target",

@@ -1,18 +1,18 @@
 import click
 import pandas as pd
-from sklearn.pipeline import Pipeline
-from skorch_forecasting.models import Seq2Seq
+from anyforecast_models.models import Seq2Seq
+from anyforecast_models.pipelines import PreprocessorEstimatorPipeline
+from anyforecast_models.preprocessing import make_preprocessor
 
-from anyforecast_scripts.cli_options import skorchforecasting_options
-from anyforecast_scripts.preprocessing._preprocessing import make_preprocessor
+from anyforecast_scripts.networks.options import network_options
 
 
 @click.command()
-@skorchforecasting_options
+@network_options
 def train(
-    train,
-    group_ids,
-    timestamp,
+    filepath,
+    group_cols,
+    datetime,
     target,
     time_varying_known,
     time_varying_unknown,
@@ -25,14 +25,16 @@ def train(
     max_epochs,
     verbose,
 ):
-    data = pd.read_csv(train)
-    data[group_ids] = data[group_ids].astype("category")
-    data[timestamp] = pd.to_datetime(data[timestamp])
+    X = pd.read_csv(filepath)
+    X[group_cols] = X[group_cols].astype("category")
+    X[datetime] = pd.to_datetime(X[datetime])
 
-    preprocessor = make_preprocessor(group_ids, timestamp, target, freq)
+    preprocessor = make_preprocessor(group_cols, datetime, target, freq)
+    Xt = preprocessor.fit_transform(X)
+
     estimator = Seq2Seq(
-        group_ids=group_ids,
-        time_idx=timestamp,
+        group_ids=group_cols,
+        time_idx=datetime,
         target=target,
         time_varying_known_reals=time_varying_known,
         time_varying_unknown_reals=time_varying_unknown,
@@ -47,8 +49,10 @@ def train(
         verbose=verbose,
     )
 
-    pipe = Pipeline([("preprocessor", preprocessor), ("estimator", estimator)])
-    pipe.fit(data)
+    pipe = PreprocessorEstimatorPipeline(
+        preprocessor, estimator, inverse_steps=["datetime", "target"]
+    )
+    pipe.fit(X)
 
 
 if __name__ == "__main__":
