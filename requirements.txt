@@ -1,2 +1,12 @@
-click
-scikit-learn
+click>=8.0
+pandas>=1.4.0
+anyforecast-models @ git+https://github.com/anyForecast/anyforecast-models.git
+torch>=2.0.1
+numpy>=1.22.0
+pandas>=1.4.0
+scikit-learn>=1.4
+skorch>=0.10.0
+pytorch-forecasting>=1.0
+torch>=2.0.1
+pyarrow
+pytest
