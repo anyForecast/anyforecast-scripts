@@ -1,10 +1,9 @@
-name: Seq2Seq
+name: seq2seq
 python_env: python_env.yaml
 entry_points:
   main:
     parameters:
-      train: {type: str}
-      group_ids: {type: str}
+      group_cols: {type: str}
       datetime: {type: str}
       target: {type: str}
       time_varying_known: {type: str, default: ""}
@@ -15,13 +14,12 @@ entry_points:
       max_encoder_length: {type: int, default: 24}
       freq: {type: int, default: D}
       device: {type: str, default: cpu}
-      max-epochs: {type: int, default: 10}
+      max_epochs: {type: int, default: 10}
       verbose: {type: int, default: 1}
     
     command: "
-    python main.py 
-    --train {train}
-    --group_ids {group_ids} 
+    python train.py 
+    --group_cols {group_cols} 
     --datetime {datetime} 
     --target {target} 
     --time_varying_known {time_varying_known}

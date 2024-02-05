@@ -4,13 +4,12 @@ from anyforecast_models.models import Seq2Seq
 from anyforecast_models.pipelines import PreprocessorEstimatorPipeline
 from anyforecast_models.preprocessing import make_preprocessor
 
-from anyforecast_scripts.networks.options import network_options
+from anyforecast_scripts.options import anyforecast_options
 
 
 @click.command()
-@network_options
+@anyforecast_options
 def train(
-    filepath,
     group_cols,
     datetime,
     target,
@@ -24,13 +23,18 @@ def train(
     device,
     max_epochs,
     verbose,
+    train,
 ):
-    X = pd.read_csv(filepath)
+    """Simple encoder-decoder arquitecture for time series forecasting.
+
+    An additional embedding layer allows to condition the encoder module on
+    static categorical data.
+    """
+    X = pd.read_csv(train)
     X[group_cols] = X[group_cols].astype("category")
     X[datetime] = pd.to_datetime(X[datetime])
 
     preprocessor = make_preprocessor(group_cols, datetime, target, freq)
-    Xt = preprocessor.fit_transform(X)
 
     estimator = Seq2Seq(
         group_ids=group_cols,
