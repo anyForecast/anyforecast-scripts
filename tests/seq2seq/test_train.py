@@ -1,7 +1,7 @@
 from click.testing import CliRunner
 
 from anyforecast_scripts.data import TimeseriesDataset, load_stallion
-from anyforecast_scripts.networks.seq2seq import main
+from anyforecast_scripts.seq2seq import train
 
 
 def test_seq2seq_train():
@@ -11,8 +11,6 @@ def test_seq2seq_train():
     group_cols = ",".join(stallion_ds.group_cols)
 
     args = [
-        "--filepath",
-        stallion_ds.filepath,
         "--group-cols",
         group_cols,
         "--datetime",
@@ -27,7 +25,9 @@ def test_seq2seq_train():
         group_cols,
         "--freq",
         stallion_ds.freq,
+        "--train",
+        stallion_ds.filepath,
     ]
 
-    result = runner.invoke(main.train, args)
+    result = runner.invoke(train.train, args)
     assert result.exit_code == 0
