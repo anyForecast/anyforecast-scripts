@@ -14,7 +14,7 @@ def split_commas(ctx, param, value: str) -> list[str]:
 
 def anyforecast_options(f: callable):
     @click.option(
-        "--group-cols",
+        "--group_cols",
         required=True,
         type=str,
         callback=split_commas,
