@@ -107,7 +107,7 @@ def anyforecast_options(f: callable):
         "--train",
         type=str,
         help="Path for training data.",
-        default=os.environ.get("train"),
+        default=os.environ.get("TRAIN"),
     )
     @functools.wraps(f)
     def wrapper_common_options(*args, **kwargs):
