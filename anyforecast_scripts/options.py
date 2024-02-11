@@ -36,7 +36,7 @@ def anyforecast_options(f: callable):
         help="Target column.",
     )
     @click.option(
-        "--time-varying-known",
+        "--time_varying_known",
         type=str,
         callback=split_commas,
         help="[Comma separated] Continuous variables that change over time and are "
@@ -44,35 +44,35 @@ def anyforecast_options(f: callable):
         "product).",
     )
     @click.option(
-        "--time-varying-unknown",
+        "--time_varying_unknown",
         type=str,
         callback=split_commas,
         help="[Comma separated] Continuous variables that change over time and are "
         "not known in the future.",
     )
     @click.option(
-        "--static-categoricals",
+        "--static_categoricals",
         type=str,
         callback=split_commas,
         help="[Comma separated] Categorical variables that do not change over "
         "time.",
     )
     @click.option(
-        "--static-reals",
+        "--static_reals",
         type=str,
         callback=split_commas,
         help="[Comma separated] Continuous variables that do not change over "
         "time.",
     )
     @click.option(
-        "--max-prediction-length",
+        "--max_prediction_length",
         default=6,
         type=int,
         help="Maximum prediction/decoder length (choose this not too short as it "
         "can help convergence)",
     )
     @click.option(
-        "--max-encoder-length",
+        "--max_encoder_length",
         default=24,
         type=int,
         help="Maximum length to encode. This is the maximum history length used by "
@@ -91,7 +91,7 @@ def anyforecast_options(f: callable):
         help="The compute device to be used.",
     )
     @click.option(
-        "--max-epochs",
+        "--max_epochs",
         default=10,
         type=int,
         help="The number of epochs to train for each :meth:`fit` call.",
