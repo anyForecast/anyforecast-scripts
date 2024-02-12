@@ -11,17 +11,17 @@ def test_seq2seq_train():
     group_cols = ",".join(stallion_ds.group_cols)
 
     args = [
-        "--group-cols",
+        "--group_cols",
         group_cols,
         "--datetime",
         stallion_ds.datetime,
         "--target",
         stallion_ds.target,
-        "--time-varying-known",
+        "--time_varying_known",
         "price_regular,price_actual,discount",
-        "--time-varying-unknown",
+        "--time_varying_unknown",
         stallion_ds.target,
-        "--static-categoricals",
+        "--static_categoricals",
         group_cols,
         "--freq",
         stallion_ds.freq,
