@@ -2,4 +2,5 @@ anyforecast-models @ git+https://github.com/anyForecast/anyforecast-models.git
 anyforecast-scripts @ git+https://github.com/anyForecast/anyforecast-scripts.git
 click
 pandas
+mlflow
 
