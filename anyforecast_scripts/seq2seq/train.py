@@ -58,31 +58,31 @@ def train(
         mlflow.log_metric("m", 1)
         mlflow.log_artifact(tmp_path)
 
-        #preprocessor = make_preprocessor(group_cols, datetime, target, freq)
+        preprocessor = make_preprocessor(group_cols, datetime, target, freq)
 
-        #estimator = Seq2Seq(
-        #    group_ids=group_cols,
-        #    time_idx=datetime,
-        #    target=target,
-        #    time_varying_known_reals=time_varying_known,
-        #    time_varying_unknown_reals=time_varying_unknown,
-        #    static_categoricals=static_categoricals,
-        #    static_reals=static_reals,
-        #    min_encoder_length=max_encoder_length // 2,
-        #    max_encoder_length=max_encoder_length,
-        #    min_prediction_length=1,
-        #    max_prediction_length=max_prediction_length,
-        #    device=device,
-        #    max_epochs=max_epochs,
-        #    verbose=verbose,
-        #)
+        estimator = Seq2Seq(
+            group_ids=group_cols,
+            time_idx=datetime,
+            target=target,
+            time_varying_known_reals=time_varying_known,
+            time_varying_unknown_reals=time_varying_unknown,
+            static_categoricals=static_categoricals,
+            static_reals=static_reals,
+            min_encoder_length=max_encoder_length // 2,
+            max_encoder_length=max_encoder_length,
+            min_prediction_length=1,
+            max_prediction_length=max_prediction_length,
+            device=device,
+            max_epochs=max_epochs,
+            verbose=verbose,
+        )
 
-        #pipe = PreprocessorEstimatorPipeline(
-        #    preprocessor, estimator, inverse_steps=["datetime", "target"]
-        #)
-        #pipe.fit(X)
+        pipe = PreprocessorEstimatorPipeline(
+            preprocessor, estimator, inverse_steps=["datetime", "target"]
+        )
+        pipe.fit(X)
 
-        #mlflow.sklearn.log_model(pipe, "model")
+        mlflow.sklearn.log_model(pipe, "model")
 
 
 if __name__ == "__main__":
